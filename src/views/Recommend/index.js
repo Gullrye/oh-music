@@ -5,9 +5,11 @@ import React, { useEffect } from 'react'
 import Slider from '@/components/slider'
 import RecommendList from '@/components/list'
 import Scroll from '@/base-ui/scroll'
+import Loading from '@/base-ui/loading'
 import { Content } from './style'
 import * as actionTypes from './store/actionCreators'
 import { useDispatch, useSelector } from 'react-redux'
+import { forceCheck } from 'react-lazyload'
 
 function Recommend(props) {
   const { bannerList, recommendList, enterLoading } = useSelector((state) => ({
@@ -35,13 +37,13 @@ function Recommend(props) {
 
   return (
     <Content>
-      <Scroll className='list'>
+      <Scroll className='list' onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerList}></Slider>
           <RecommendList recommendList={recommendList}></RecommendList>
         </div>
       </Scroll>
-      {enterLoading ? 'loading' : null}
+      {enterLoading ? <Loading></Loading> : null}
     </Content>
   )
 }
