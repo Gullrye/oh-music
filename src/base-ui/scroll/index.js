@@ -9,7 +9,7 @@ import React, {
 import PropTypes from 'prop-types'
 import BScroll from 'better-scroll'
 import styled from 'styled-components'
-import { debounce } from '@/utils/index'
+import { debounce } from '@/utils/util'
 
 const ScrollContainer = styled.div`
   overflow: hidden;

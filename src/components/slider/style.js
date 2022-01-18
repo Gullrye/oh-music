@@ -7,14 +7,14 @@ export const SliderContainer = styled.div`
   width: 100%;
   height: 100%;
   margin: auto;
-  background: #fff;
+  background: ${style['background-color']};
   &::before {
     content: '';
     position: absolute;
     top: -300px;
     height: 400px;
     width: 100%;
-    background: ${style["theme-color"]};
+    background: ${style['theme-color']};
   }
   .swiper-container {
     position: relative;

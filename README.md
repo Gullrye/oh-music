@@ -23,3 +23,7 @@
 - 配置别名
 
 `yarn add @craco/craco`，然后创建 `craco.config.js` 文件并写入配置
+
+- axios
+
+不同环境：`.env.development` 中写入 `REACT_APP_BASE_URL=https://music-api-five.vercel.app`，通过 `process.env.REACT_APP_BASE_URL` 获取
