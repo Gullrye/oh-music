@@ -1,5 +1,9 @@
 # oh-music-react
 
+- `jsx` 的 `html` 提示及补全
+
+![html](images/2022-01-18-18-38-35.png)
+
 - 改默认端口号
 
 ![port](images/2022-01-16-21-20-48.png)
@@ -39,3 +43,7 @@ import { forceCheck } from 'react-lazyload';
 // scroll 组件中应用这个方法
 <Scroll className="list" onScroll={forceCheck}>
 ```
+
+- `better-scroll` 个人犯错
+
+将 `src/base-ui/scroll/index` 中的 `horizontal` 写错成了 `horizental`，而在其他文件中则全都写成 `horizontal`，导致一直无法滚动！

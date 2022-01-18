@@ -19,7 +19,7 @@ const ScrollContainer = styled.div`
 
 const Scroll = forwardRef((props, ref) => {
   const [bScroll, setBScroll] = useState()
-  const scrollContaninerRef = useRef()
+  const scrollContainerRef = useRef()
   const {
     direction,
     click,
@@ -40,8 +40,8 @@ const Scroll = forwardRef((props, ref) => {
 
   // 1. 创建 better-scroll
   useEffect(() => {
-    const scroll = new BScroll(scrollContaninerRef.current, {
-      scrollX: direction === 'horizental',
+    const scroll = new BScroll(scrollContainerRef.current, {
+      scrollX: direction === 'horizontal',
       scrollY: direction === 'vertical',
       probeType: 3,
       click: click,
@@ -123,7 +123,7 @@ const Scroll = forwardRef((props, ref) => {
 
   // 7.
   return (
-    <ScrollContainer ref={scrollContaninerRef}>
+    <ScrollContainer ref={scrollContainerRef} className='scroll-wrapper'>
       {props.children}
     </ScrollContainer>
   )
