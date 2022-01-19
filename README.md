@@ -1,38 +1,44 @@
 # oh-music-react
 
-- `jsx` 的 `html` 提示及补全
+1.`jsx` 的 `html` 提示及补全
 
 ![html](images/2022-01-18-18-38-35.png)
 
-- 改默认端口号
+2.改默认端口号
+
+直接改图中路径对应的代码：
 
 ![port](images/2022-01-16-21-20-48.png)
 
-则我们改进添加 `.env` 文件并写入 `PORT=3333`
+其他方法：添加 `.env` 文件并写入 `PORT=3333`
 
-- vscode 安装 `vscode-styled-components` 插件
+3.vscode 安装 `vscode-styled-components` 插件
 
-- `yarn add react-router react-router-dom react-router-config`
+4.`yarn add react-router react-router-dom react-router-config`
 
-- `react-router`，`react-router-dom` 版本为 6 导致报错，应该安装 5.2.0 左右的版本
-  ![react-dom-v6-error](images/2022-01-16-22-48-52.png)
+5.`react-router`，`react-router-dom` 版本为 6 导致使用时报错，应该安装 5.2.0 左右的版本。
 
-- redux
-  `yarn add immer redux redux-thunk react-redux`
+![react-dom-v6-error](images/2022-01-16-22-48-52.png)
 
-- swiper
+6.redux
+`yarn add immer redux redux-thunk react-redux`
+
+7.swiper
 
 `yarn add swiper@4.5.1`，注意版本号。
 
-- 配置别名
+8.配置别名和安装「别名路径跳转」插件
 
 `yarn add @craco/craco`，然后创建 `craco.config.js` 文件并写入配置
 
-- axios
+插件如下，需要按说明到 `vscode` 的 `setting.json` 下写入相关配置。
+![别名extend](images/2022-01-19-12-07-53.png)
 
-不同环境：`.env.development` 中写入 `REACT_APP_BASE_URL=https://music-api-five.vercel.app`，通过 `process.env.REACT_APP_BASE_URL` 获取
+9.axios
 
-- `react-lazyload`
+不同环境不同接口配置：`.env.development` 中写入 `REACT_APP_BASE_URL=https://music-api-five.vercel.app`，通过 `process.env.REACT_APP_BASE_URL` 获取
+
+10.`react-lazyload`
 
 视口内的图片显示真实资源，视口外则显示占位图片。当滑动时，让下面相应的图片显示：
 
@@ -44,6 +50,6 @@ import { forceCheck } from 'react-lazyload';
 <Scroll className="list" onScroll={forceCheck}>
 ```
 
-- `better-scroll` 个人犯错
+11.`better-scroll` 个人犯错
 
 将 `src/base-ui/scroll/index` 中的 `horizontal` 写错成了 `horizental`，而在其他文件中则全都写成 `horizontal`，导致一直无法滚动！
