@@ -10,7 +10,7 @@
 
 ![port](images/2022-01-16-21-20-48.png)
 
-其他方法：添加 `.env` 文件并写入 `PORT=3333`
+其他方法：添加 `.env` 文件并写入 `PORT=3333`。
 
 3.vscode 安装 `vscode-styled-components` 插件
 
@@ -29,14 +29,14 @@
 
 8.配置别名和安装「别名路径跳转」插件
 
-`yarn add @craco/craco`，然后创建 `craco.config.js` 文件并写入配置
+`yarn add @craco/craco`，然后创建 `craco.config.js` 文件并写入配置。
 
 插件如下，需要按说明到 `vscode` 的 `setting.json` 下写入相关配置。
 ![别名extend](images/2022-01-19-12-07-53.png)
 
 9.axios
 
-不同环境不同接口配置：`.env.development` 中写入 `REACT_APP_BASE_URL=https://music-api-five.vercel.app`，通过 `process.env.REACT_APP_BASE_URL` 获取
+不同环境不同接口配置：`.env.development` 中写入 `REACT_APP_BASE_URL=https://music-api-five.vercel.app`，通过 `process.env.REACT_APP_BASE_URL` 获取。
 
 10.`react-lazyload`
 

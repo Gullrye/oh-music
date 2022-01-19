@@ -1,48 +1,26 @@
 /**
  * 歌手列表组件
  */
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Horizon from '@/base-ui/horizon'
 import Scroll from '@/base-ui/scroll'
-import { ListContainer, SingerList, ListItem } from './style'
+import Loading from '@/base-ui/loading'
+import LazyLoad, { forceCheck } from 'react-lazyload'
+import { NavContainer, ListContainer, SingerList, ListItem } from './style'
 import { categoryTypes, areaTypes, alphaTypes } from '@/utils/category-data'
 import * as actionTypes from './store/actionCreators'
 import { useDispatch, useSelector } from 'react-redux'
 
 function Singers(props) {
-  // 横向滚动分类列表
-  let [category, setCategory] = useState('') // -1 为当前分类的 key，代表全部
-  let [area, setArea] = useState('')
-  let [alpha, setAlpha] = useState('')
   const scrollRef = useRef(null)
-  let handleCategoryClick = (val) => {
-    // val 为子组件传递过来的 item.key
-    setCategory(val)
-    updateCategory(val)
-    scrollRef.current.refresh()
-  }
-  let handleAreaClick = (val) => {
-    setArea(val)
-    updateArea(val)
-    scrollRef.current.refresh()
-  }
-  let handleAlphaClick = (val) => {
-    setAlpha(val)
-    updateAlpha(val)
-    scrollRef.current.refresh()
-  }
-  useEffect(() => {
-    if (!singerList.length && !category && !alpha) {
-      getHotSingerDispatch()
-    }
-    // eslint-disable-next-line
-  }, [])
 
-  // ------------------------------------------
+  /**
+   * 组件连接 Redux
+   */
   const {
-    xcategory,
-    xarea,
-    xalpha,
+    category,
+    area,
+    alpha,
     singerList,
     enterLoading,
     listOffset,
@@ -59,12 +37,14 @@ function Singers(props) {
     pullDownLoading: state.singers.pullDownLoading,
   }))
   const dispatch = useDispatch()
+  // 获取热门歌手列表
   const getHotSingerDispatch = () => {
     dispatch(actionTypes.getHotSingerList())
     // dispatch(actionTypes.refreshMoreHotSingerList())
   }
-  // 分类歌手列表
+  // 修改各个分类，然后获取对应分类的歌手列表
   const updateCategory = (newVal) => {
+    // dispatch(actionTypes.changeEnterLoading(true))
     dispatch(actionTypes.changeCategory(newVal))
     dispatch(actionTypes.getSingerList())
   }
@@ -77,12 +57,37 @@ function Singers(props) {
     dispatch(actionTypes.getSingerList())
   }
   useEffect(() => {
-    if (!singerList.length) {
+    if (!singerList.length && !category && !area && !alpha) {
       getHotSingerDispatch()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  // ------------------------------------------
+
+  /**
+   * 点击分类栏，获取对应分类的歌手列表
+   */
+  let handleCategoryClick = (val) => {
+    // val 为子组件传递过来的 item.key
+    // setCategory(val)
+    updateCategory(val)
+    scrollRef.current.refresh()
+  }
+  let handleAreaClick = (val) => {
+    // setArea(val)
+    updateArea(val)
+    scrollRef.current.refresh()
+  }
+  let handleAlphaClick = (val) => {
+    // setAlpha(val)
+    updateAlpha(val)
+    scrollRef.current.refresh()
+  }
+  useEffect(() => {
+    if (!singerList.length && !category && !alpha) {
+      getHotSingerDispatch()
+    }
+    // eslint-disable-next-line
+  }, [])
 
   const renderSingerList = () => {
     return (
@@ -91,12 +96,23 @@ function Singers(props) {
           return (
             <ListItem key={index}>
               <div className='img-wrapper'>
-                <img
-                  src={`${item.picUrl}?param=300x300`}
-                  width='100%'
-                  height='100%'
-                  alt='singer'
-                />
+                <LazyLoad
+                  placeholder={
+                    <img
+                      width='100%'
+                      height='100%'
+                      src={require('../../assets/img/singers.png')}
+                      alt='singer'
+                    />
+                  }
+                >
+                  <img
+                    src={`${item.picUrl}?param=300x300`}
+                    width='100%'
+                    height='100%'
+                    alt='singer'
+                  />
+                </LazyLoad>
               </div>
               <span className='name'>{item.name}</span>
             </ListItem>
@@ -108,7 +124,7 @@ function Singers(props) {
 
   return (
     <div>
-      <div className='nav-list'>
+      <NavContainer>
         <Horizon
           list={categoryTypes}
           title={'分类(默认热门)：'}
@@ -127,11 +143,16 @@ function Singers(props) {
           handleClick={handleAlphaClick}
           oldVal={alpha}
         ></Horizon>
-      </div>
+      </NavContainer>
       {/* ListContainer 提供窗口固定高度 */}
       <ListContainer>
-        <Scroll ref={scrollRef}>{renderSingerList()}</Scroll>
+        <Scroll ref={scrollRef} onScroll={forceCheck}>
+          {renderSingerList()}
+        </Scroll>
       </ListContainer>
+      {
+        enterLoading? <Loading></Loading> : null
+      }
     </div>
   )
 }

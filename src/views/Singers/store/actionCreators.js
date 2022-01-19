@@ -72,12 +72,14 @@ export const getSingerList = () => {
     const area = getState().singers.area
     const alpha = getState().singers.alpha
     const offset = getState().singers.listOffset
+    // 请求数据时的动画
+    dispatch(changeEnterLoading(true))
     getSingerListRequest(category, area, alpha, offset)
       .then((data) => {
         dispatch(changeSingerList(data.artists))
-        dispatch(changeEnterLoading(false))
         dispatch(changePullDownLoading(false))
         dispatch(changeListOffset(data.artists.length))
+        dispatch(changeEnterLoading(false))
       })
       .catch(() => {
         console.log('歌手分类数据获取失败')

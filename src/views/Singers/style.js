@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 import style from '@/assets/css/global-style'
 
+export const NavContainer = styled.div`
+  padding-left: 5px;
+`
 export const ListContainer = styled.div`
   overflow: hidden;
   position: fixed;
