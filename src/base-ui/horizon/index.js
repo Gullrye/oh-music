@@ -1,7 +1,7 @@
 /**
  * 水平滚动列表
  */
-import React, { useState, useRef, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Scroll from '@/base-ui/scroll/index'
 import { PropTypes } from 'prop-types'
@@ -15,49 +15,34 @@ const List = styled.div`
   justify-content: center;
   overflow: hidden;
   > span:first-of-type {
-    display: block;
-    flex: 0 0 auto;
     padding: 5px 0;
     color: grey;
     font-size: ${style['font-size-m']};
   }
 `
 const ListItem = styled.span`
-  flex: 0 0 auto;
-  font-size: ${style['font-size-m']};
   padding: 5px 5px;
   border-radius: 10px;
+  font-size: ${style['font-size-m']};
+  white-space: nowrap;
+  box-sizing: border-box;
   &.selected {
-    color: ${style['theme-color']};
-    border: 1px solid ${style['theme-color']};
-    opacity: 0.8;
+    color: #fff;
+    background: ${style['theme-color']};
+    opacity: 0.9;
   }
 `
 
 function Horizon(props) {
-  // const [refreshCategoryScroll, setRefreshCategoryScroll] = useState(false)
-  // const Category = useRef(null)
   const { list, oldVal, title } = props
   const { handleClick } = props
-
-  // useEffect(() => {
-  //   let categoryDOM = Category.current
-  //   let tagElems = categoryDOM.querySelectorAll('span')
-  //   let totalWidth = 0
-  //   Array.from(tagElems).forEach((ele) => {
-  //     totalWidth += ele.offsetWidth
-  //   })
-  //   totalWidth += 2
-  //   categoryDOM.style.width = `${totalWidth}px`
-  //   setRefreshCategoryScroll(true)
-  // }, [refreshCategoryScroll])
 
   const clickHandle = (item) => {
     handleClick(item.key)
   }
   return (
     <Scroll direction={'horizontal'} refresh={true}>
-      <div style={{width: 'max-content'}} className='scroll-content'>
+      <div style={{ width: 'max-content' }} className='scroll-content'>
         <List>
           <span>{title}</span>
           {list.map((item) => {
@@ -80,7 +65,7 @@ function Horizon(props) {
 // 组件接收的参数
 Horizon.propTypes = {
   list: PropTypes.array, // 列表数据
-  oldVal: PropTypes.string, // 当前 item 的值
+  oldVal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // 当前 item 的值
   title: PropTypes.string, // 列表左边的标题
   handleClick: PropTypes.func,
 }
