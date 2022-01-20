@@ -1,42 +1,81 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import style from '@/assets/css/global-style'
 
-const loading = keyframes`
-  0%, 100% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1);
-  }
-`
-
 const LoadingWrapper = styled.div`
-  > div {
+  & > div {
     position: fixed;
     z-index: 1000;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    width: 60px;
-    height: 60px;
-    margin: auto;
-    border-radius: 50%;
-    opacity: 0.6;
-    background-color: ${style['theme-color']};
-    animation: ${loading} 1.2s infinite ease-in;
-  }
-  > div:nth-child(2) {
-    animation-delay: -0.6s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+    svg path,
+    svg rect {
+      fill: ${style['theme-color']};
+    }
   }
 `
 
 function Loading() {
   return (
     <LoadingWrapper>
-      <div></div>
-      <div></div>
+      <div>
+        <svg x='0px' y='0px' width='24px' height='30px'>
+          <rect x='0' y='13' width='4' height='5' fill='#7a88fe'>
+            <animate
+              attributeName='height'
+              values='5;21;5'
+              begin='0s'
+              dur='0.6s'
+              repeatCount='indefinite'
+            />
+            <animate
+              attributeName='y'
+              values='13; 5; 13'
+              begin='0s'
+              dur='0.6s'
+              repeatCount='indefinite'
+            />
+          </rect>
+          <rect x='10' y='13' width='4' height='5' fill='#7a88fe'>
+            <animate
+              attributeName='height'
+              values='5;21;5'
+              begin='0.15s'
+              dur='0.6s'
+              repeatCount='indefinite'
+            />
+            <animate
+              attributeName='y'
+              values='13; 5; 13'
+              begin='0.15s'
+              dur='0.6s'
+              repeatCount='indefinite'
+            />
+          </rect>
+          <rect x='20' y='13' width='4' height='5' fill='#7a88fe'>
+            <animate
+              attributeName='height'
+              values='5;21;5'
+              begin='0.3s'
+              dur='0.6s'
+              repeatCount='indefinite'
+            />
+            <animate
+              attributeName='y'
+              values='13; 5; 13'
+              begin='0.3s'
+              dur='0.6s'
+              repeatCount='indefinite'
+            />
+          </rect>
+        </svg>
+      </div>
     </LoadingWrapper>
   )
 }
