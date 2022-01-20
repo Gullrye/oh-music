@@ -44,18 +44,41 @@ function Singers(props) {
   }
   // 修改各个分类，然后获取对应分类的歌手列表
   const updateCategory = (newVal) => {
-    // dispatch(actionTypes.changeEnterLoading(true))
+    dispatch(actionTypes.changeListOffset(0))
     dispatch(actionTypes.changeCategory(newVal))
     dispatch(actionTypes.getSingerList())
   }
   const updateArea = (newVal) => {
+    dispatch(actionTypes.changeListOffset(0))
     dispatch(actionTypes.changeArea(newVal))
     dispatch(actionTypes.getSingerList())
   }
   const updateAlpha = (newVal) => {
+    dispatch(actionTypes.changeListOffset(0))
     dispatch(actionTypes.changeAlpha(newVal))
     dispatch(actionTypes.getSingerList())
   }
+  // 上拉加载
+  const pullUpRefresh = (hot) => {
+    dispatch(actionTypes.changePullUpLoading(true))
+    // 分类未被选择，则显示热门歌手
+    if (hot) {
+      dispatch(actionTypes.getMoreHotSingerList())
+    } else {
+      dispatch(actionTypes.getMoreSingerList())
+    }
+  }
+  // 下拉刷新
+  const pullDownRefresh = (category, area, alpha) => {
+    dispatch(actionTypes.changePullDownLoading(true))
+    dispatch(actionTypes.changeListOffset(0))
+    if (category === '' && area === '' && alpha === '') {
+      dispatch(actionTypes.getHotSingerList())
+    } else {
+      dispatch(actionTypes.getSingerList())
+    }
+  }
+
   useEffect(() => {
     if (!singerList.length && !category && !area && !alpha) {
       getHotSingerDispatch()
@@ -68,17 +91,17 @@ function Singers(props) {
    */
   let handleCategoryClick = (val) => {
     // val 为子组件传递过来的 item.key
-    // setCategory(val)
+    if (category === val) return // 避免相同分类，重复点击触发重复请求
     updateCategory(val)
     scrollRef.current.refresh()
   }
   let handleAreaClick = (val) => {
-    // setArea(val)
+    if (area === val) return
     updateArea(val)
     scrollRef.current.refresh()
   }
   let handleAlphaClick = (val) => {
-    // setAlpha(val)
+    if (alpha === val) return
     updateAlpha(val)
     scrollRef.current.refresh()
   }
@@ -88,6 +111,16 @@ function Singers(props) {
     }
     // eslint-disable-next-line
   }, [])
+
+  /**
+   * 上拉加载，下拉刷新
+   */
+  const handlePullUp = () => {
+    pullUpRefresh(category === '' && area === '' && alpha === '')
+  }
+  const handlePullDown = () => {
+    pullDownRefresh(category, area, alpha)
+  }
 
   const renderSingerList = () => {
     return (
@@ -146,13 +179,18 @@ function Singers(props) {
       </NavContainer>
       {/* ListContainer 提供窗口固定高度 */}
       <ListContainer>
-        <Scroll ref={scrollRef} onScroll={forceCheck}>
+        <Scroll
+          ref={scrollRef}
+          onScroll={forceCheck}
+          pullUp={handlePullUp}
+          pullDown={handlePullDown}
+          pullUpLoading={pullUpLoading}
+          pullDownLoading={pullDownLoading}
+        >
           {renderSingerList()}
         </Scroll>
       </ListContainer>
-      {
-        enterLoading? <Loading></Loading> : null
-      }
+      {enterLoading ? <Loading></Loading> : null}
     </div>
   )
 }

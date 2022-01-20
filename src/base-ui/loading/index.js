@@ -13,7 +13,6 @@ const LoadingWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.1);
     svg path,
     svg rect {
       fill: ${style['theme-color']};

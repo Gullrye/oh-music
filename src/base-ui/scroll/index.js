@@ -8,6 +8,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import BScroll from 'better-scroll'
+import LoadingDown from '@/base-ui/loading-down'
 import styled from 'styled-components'
 import { debounce } from '@/utils/util'
 
@@ -15,6 +16,22 @@ const ScrollContainer = styled.div`
   overflow: hidden;
   width: 100%;
   height: 100%;
+`
+const PullDownLoading = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0px;
+  height: 30px;
+  z-index: 100;
+`
+const PullUpLoading = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  height: 30px;
+  z-index: 100;
 `
 
 const Scroll = forwardRef((props, ref) => {
@@ -73,6 +90,7 @@ const Scroll = forwardRef((props, ref) => {
   useEffect(() => {
     if (!bScroll || !pullUp) return
     const handlePullUp = () => {
+      // 距离底部 100 距离内
       if (bScroll.y <= bScroll.maxScrollY + 100) {
         pullUpDebounce()
       }
@@ -122,9 +140,24 @@ const Scroll = forwardRef((props, ref) => {
   }))
 
   // 7.
+  const PullUpdisplayStyle = pullUpLoading
+    ? { display: '' }
+    : { display: 'none' }
+  const PullDowndisplayStyle = pullDownLoading
+    ? { display: '' }
+    : { display: 'none' }
+
   return (
     <ScrollContainer ref={scrollContainerRef} className='scroll-wrapper'>
       {props.children}
+      {/* 上拉加载动画 */}
+      <PullUpLoading style={PullUpdisplayStyle}>
+        <LoadingDown></LoadingDown>
+      </PullUpLoading>
+      {/* 下拉刷新动画 */}
+      <PullDownLoading style={PullDowndisplayStyle}>
+        <LoadingDown></LoadingDown>
+      </PullDownLoading>
     </ScrollContainer>
   )
 })
