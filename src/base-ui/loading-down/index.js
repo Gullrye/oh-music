@@ -1,5 +1,5 @@
 /**
- * 下拉刷新动画
+ * 下拉刷新上拉加载动画
  */
 import React from 'react'
 import styled, { keyframes } from 'styled-components'

@@ -53,3 +53,5 @@ import { forceCheck } from 'react-lazyload';
 11.`better-scroll` 个人犯错
 
 将 `src/base-ui/scroll/index` 中的 `horizontal` 写错成了 `horizental`，而在其他文件中则全都写成 `horizontal`，导致一直无法滚动！
+
+12.Singers 页面上拉加载、下拉刷新

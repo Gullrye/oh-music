@@ -18,3 +18,7 @@ export const getSingerListRequest = (category, area, alpha, count) => {
     `/artist/list?type=${category}&area=${area}&initial=${alpha.toLowerCase()}&offset=${count}`
   )
 }
+// 所有榜单内容摘要
+export const getRankListRequest = () => {
+  return instance.get('/toplist/detail')
+}
