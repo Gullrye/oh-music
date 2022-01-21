@@ -2,15 +2,26 @@ import React from 'react'
 import { ListWrapper, ListItem, List } from './style'
 import { getCount } from '@/utils/util.js'
 import LazyLoad from 'react-lazyload'
+// 在 App 组件中获取到 history 对象
+// App 组件必须包裹在 Router 组件之内
+// App 组件使用 withRouter 高阶组件包裹
+import { withRouter } from 'react-router-dom'
 
 function RecommendList(props) {
+  const enterDetail = (id) => {
+    props.history.push(`/recommend/${id}`)
+  }
+
   return (
     <ListWrapper>
       <h1 className='title'> 推荐歌单 </h1>
       <List>
         {props.recommendList.map((item, index) => {
           return (
-            <ListItem key={item.id + index}>
+            <ListItem
+              key={item.id + index}
+              onClick={() => enterDetail(item.id)}
+            >
               <div className='img-wrapper'>
                 <LazyLoad
                   placeholder={
@@ -44,4 +55,4 @@ function RecommendList(props) {
   )
 }
 
-export default React.memo(RecommendList)
+export default React.memo(withRouter(RecommendList))

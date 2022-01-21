@@ -9,7 +9,7 @@ import { RankListContainer, RankList, ListItem } from './style'
 
 function Rank(props) {
   // 连接 redux
-  const { rankList, loading } = useSelector((state) => ({
+  const { rankList } = useSelector((state) => ({
     rankList: state.rank.rankList,
     loading: state.rank.loading,
   }))

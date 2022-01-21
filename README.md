@@ -55,3 +55,34 @@ import { forceCheck } from 'react-lazyload';
 将 `src/base-ui/scroll/index` 中的 `horizontal` 写错成了 `horizental`，而在其他文件中则全都写成 `horizontal`，导致一直无法滚动！
 
 12.Singers 页面上拉加载、下拉刷新
+
+13.在 App 组件中获取到 history 对象
+App 组件必须包裹在 Router 组件之内，App 组件使用 withRouter 高阶组件包裹。
+
+```js
+// src/components/list/index.js
+import { withRouter } from 'react-router-dom'
+// ...
+export default React.memo(withRouter(RecommendList))
+```
+
+14.渲染当前所在路由的下一层子路由
+
+```js
+import { renderRoutes } from 'react-router-config'
+
+function Recommend(props) {
+  // ...
+  return (
+    <Content>
+      {/* ... */}
+      {/* 将目前所在路由的下一层子路由加以渲染 */}
+      {renderRoutes(props.route.routes)}
+    </Content>
+  )
+}
+```
+
+15.切页动画
+
+`yarn add react-transition-group`

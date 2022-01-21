@@ -2,6 +2,7 @@
  * 推荐组件
  */
 import React, { useEffect } from 'react'
+import { renderRoutes } from 'react-router-config'
 import Slider from '@/components/slider'
 import RecommendList from '@/components/list'
 import Scroll from '@/base-ui/scroll'
@@ -44,6 +45,8 @@ function Recommend(props) {
         </div>
       </Scroll>
       {enterLoading ? <Loading></Loading> : null}
+      {/* 将目前所在路由的下一层子路由加以渲染 */}
+      {renderRoutes(props.route.routes)}
     </Content>
   )
 }

@@ -16,10 +16,10 @@ export const ListItem = styled.div`
     align-items: flex-start;
     justify-content: center;
     padding: 5px 10px 5px 5px;
+    font-size: 16px;
     .name {
       color: ${(props) => (props.hasTracks ? '#7a88fe' : '#000')};
       font-weight: ${(props) => (props.hasTracks ? 'bold' : 'normal')};
-      font-size: 16px;
       padding-bottom: 10px;
     }
     .desc {
